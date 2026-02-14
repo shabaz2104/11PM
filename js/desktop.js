@@ -1,6 +1,9 @@
+// desktop.js
+
 const icons = document.querySelectorAll(".icon");
-const windows = document.querySelectorAll(".window");
 const closeButtons = document.querySelectorAll(".close-btn");
+
+// ===== Window Open / Close =====
 
 icons.forEach(icon => {
   icon.addEventListener("click", () => {
@@ -17,28 +20,27 @@ closeButtons.forEach(btn => {
     e.target.closest(".window").classList.add("hidden");
   });
 });
-function updateWorkReport() {
-  const workBody = document.querySelector("#work-window .window-body");
-  const phase = getPhase();
 
-  if (phase === 1) {
-    workBody.innerHTML =
-      "Quarterly report draft.<br />Please finalize before leaving.";
-  }
+// ===== Work Report Submission Logic =====
 
-  if (phase === 2) {
-    workBody.innerHTML =
-      "Quarterly report draft.<br />You've been here longer than planned.";
-  }
+const submitBtn = document.getElementById("submit-report");
+const feedback = document.getElementById("report-feedback");
 
-  if (phase >= 3) {
-    const lastCommand =
-      storyState.commandsTyped.slice(-1)[0] || "nothing";
+if (submitBtn) {
+  submitBtn.addEventListener("click", () => {
+    const projectCode = document.getElementById("project-code").value.trim();
+    const status = document.querySelector('input[name="status"]:checked');
+    const confirmed = document.getElementById("confirm-checkbox").checked;
 
-    workBody.innerHTML =
-      "Quarterly report draft.<br />Last input: <b>" +
-      lastCommand +
-      "</b>";
-  }
+    if (!projectCode || !status || !confirmed) {
+      feedback.textContent = "Report incomplete.";
+      feedback.style.color = "red";
+      return;
+    }
+
+    feedback.textContent = "Report submitted successfully.";
+    feedback.style.color = "green";
+
+    window.reportSubmitted = true;
+  });
 }
-setInterval(updateWorkReport, 2000);

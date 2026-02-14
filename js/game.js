@@ -97,3 +97,39 @@ function triggerAlarm() {
     if (input) input.disabled = false;
   }, 6000);
 }
+// ===== In-Game Clock =====
+
+const taskbarTime = document.getElementById("taskbar-time");
+const taskbarDay = document.getElementById("taskbar-day");
+
+// Game starts at 11:00 PM
+const GAME_START_HOUR = 23;
+const GAME_START_MINUTE = 0;
+
+function updateGameClock() {
+  const elapsedMinutes = Math.floor(
+    (Date.now() - storyState.startTime) / 60000
+  );
+
+  let totalMinutes =
+    GAME_START_HOUR * 60 + GAME_START_MINUTE + elapsedMinutes;
+
+  let hours = Math.floor(totalMinutes / 60) % 24;
+  let minutes = totalMinutes % 60;
+
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const displayHour = hours % 12 === 0 ? 12 : hours % 12;
+
+  const timeString =
+    displayHour +
+    ":" +
+    minutes.toString().padStart(2, "0") +
+    " " +
+    ampm;
+
+  if (taskbarTime) taskbarTime.textContent = timeString;
+}
+
+// Update every 10 seconds (smooth but cheap)
+setInterval(updateGameClock, 10000);
+updateGameClock();

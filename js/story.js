@@ -3,7 +3,8 @@
 const storyState = {
   startTime: Date.now(),
   phase: 1,
-  commandsTyped: []
+  commandsTyped: [],
+  deadlineMinute: 15
 };
 
 function updatePhase() {
@@ -26,4 +27,11 @@ function getPhase() {
 }
 function hasBeenIdle(seconds) {
   return (Date.now() - storyState.startTime) / 1000 > seconds;
+}
+function getMinutesUntilDeadline() {
+  const elapsedMinutes = Math.floor(
+    (Date.now() - storyState.startTime) / 60000
+  );
+
+  return storyState.deadlineMinute - elapsedMinutes;
 }
