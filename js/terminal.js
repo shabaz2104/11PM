@@ -1,3 +1,5 @@
+// terminal.js
+
 const terminalInput = document.getElementById("terminal-input");
 const terminalOutput = document.getElementById("terminal-output");
 
@@ -8,12 +10,18 @@ function printLine(text = "") {
   terminalOutput.scrollTop = terminalOutput.scrollHeight;
 }
 
+// Initial terminal output
 printLine("Terminal ready.");
 printLine("Type 'help' to see available commands.");
 
+// Handle input
 terminalInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     const command = terminalInput.value.trim();
+
+    // 🔴 STEP 7.2 — MEMORY: store every command
+    storyState.commandsTyped.push(command);
+
     printLine("> " + command);
     handleCommand(command);
     terminalInput.value = "";
@@ -22,24 +30,39 @@ terminalInput.addEventListener("keydown", (e) => {
 
 function handleCommand(cmd) {
   switch (cmd) {
+
     case "help":
-      printLine("Available commands:");
-      printLine("help, whoami, clear, exit");
+      if (getPhase() <= 2) {
+        printLine("Available commands:");
+        printLine("help, whoami, clear, exit");
+      } else {
+        printLine("You already asked that.");
+      }
       break;
 
     case "whoami":
-      printLine("Employee44721");
+      if (getPhase() === 1) {
+        printLine("Employee44721");
+      } else if (getPhase() === 2) {
+        printLine("Employee 44721");
+      } else {
+        printLine("You already know.");
+      }
       break;
 
     case "clear":
       terminalOutput.innerHTML = "";
       break;
 
-    case "exit":
-      printLine("Closing terminal...");
-      break;
+  case "exit":
+  printLine("Requesting system logout...");
+  setTimeout(() => {
+    triggerAlarm();
+  }, 1000);
+  break;
 
     case "":
+      // Do nothing on empty input
       break;
 
     default:

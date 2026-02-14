@@ -17,3 +17,28 @@ closeButtons.forEach(btn => {
     e.target.closest(".window").classList.add("hidden");
   });
 });
+function updateWorkReport() {
+  const workBody = document.querySelector("#work-window .window-body");
+  const phase = getPhase();
+
+  if (phase === 1) {
+    workBody.innerHTML =
+      "Quarterly report draft.<br />Please finalize before leaving.";
+  }
+
+  if (phase === 2) {
+    workBody.innerHTML =
+      "Quarterly report draft.<br />You've been here longer than planned.";
+  }
+
+  if (phase >= 3) {
+    const lastCommand =
+      storyState.commandsTyped.slice(-1)[0] || "nothing";
+
+    workBody.innerHTML =
+      "Quarterly report draft.<br />Last input: <b>" +
+      lastCommand +
+      "</b>";
+  }
+}
+setInterval(updateWorkReport, 2000);

@@ -7,72 +7,84 @@
 </head>
 <body>
 
+  <!-- Boot Screen -->
   <div id="boot-screen">
     <pre id="boot-text"></pre>
   </div>
 
+  <!-- Desktop -->
   <div id="desktop" class="hidden">
 
-  <div id="top-bar">
-    Friday — 11:00 PM
+    <!-- Top Bar -->
+    <div id="top-bar">
+      Friday — 11:00 PM
+    </div>
+
+    <!-- Desktop Icons -->
+    <div id="desktop-icons">
+      <div class="icon" data-window="work">
+        📄
+        <span>Work_Report.txt</span>
+      </div>
+
+      <div class="icon" data-window="terminal">
+        🖥
+        <span>Terminal</span>
+      </div>
+
+      <div class="icon" data-window="logs">
+        📁
+        <span>Logs</span>
+      </div>
+    </div>
+
+    <!-- Windows -->
+
+    <!-- Work Report Window -->
+    <div class="window hidden" id="work-window">
+      <div class="window-header">
+        Work_Report.txt
+        <button class="close-btn">X</button>
+      </div>
+      <div class="window-body">
+        Quarterly report draft.<br />
+        Please finalize before leaving.
+      </div>
+    </div>
+
+    <!-- Terminal Window -->
+    <div class="window hidden" id="terminal-window">
+      <div class="window-header">
+        Terminal
+        <button class="close-btn">X</button>
+      </div>
+      <div class="window-body terminal-body">
+        <div id="terminal-output"></div>
+        <div class="terminal-input-line">
+          <span>&gt;</span>
+          <input type="text" id="terminal-input" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Logs Window -->
+    <div class="window hidden" id="logs-window">
+      <div class="window-header">
+        Logs
+        <button class="close-btn">X</button>
+      </div>
+      <div class="window-body">
+        System logs unavailable.
+      </div>
+    </div>
+
   </div>
 
-  <div id="desktop-icons">
-    <div class="icon" data-window="work">
-      📄
-      <span>Work_Report.txt</span>
-    </div>
-
-    <div class="icon" data-window="terminal">
-      🖥
-      <span>Terminal</span>
-    </div>
-
-    <div class="icon" data-window="logs">
-      📁
-      <span>Logs</span>
-    </div>
-  </div>
-
-  <!-- Windows -->
-  <div class="window hidden" id="work-window">
-    <div class="window-header">
-      Work_Report.txt
-      <button class="close-btn">X</button>
-    </div>
-    <div class="window-body">
-      Quarterly report draft.
-      Please finalize before leaving.
-    </div>
-  </div>
-
-  <div class="window hidden" id="terminal-window">
-    <div class="window-header">
-      Terminal
-      <button class="close-btn">X</button>
-    </div>
-   <div class="window-body terminal-body">
-  <div id="terminal-output"></div>
-  <div class="terminal-input-line">
-    <span>&gt;</span>
-    <input type="text" id="terminal-input" autofocus />
-  </div>
-</div>
-  </div>
-
-  <div class="window hidden" id="logs-window">
-    <div class="window-header">
-      Logs
-      <button class="close-btn">X</button>
-    </div>
-    <div class="window-body">
-      System logs unavailable.
-    </div>
-  </div>
-
-</div>
+  <!-- Core Systems (ORDER MATTERS) -->
+  <script src="js/story.js"></script>
   <script src="js/game.js"></script>
-<script src="js/desktop.js"></script>
-<script src="js/terminal.js"></script>
+  <script src="js/desktop.js"></script>
+  <script src="js/terminal.js"></script>
+
 </body>
 </html>
