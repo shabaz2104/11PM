@@ -4,7 +4,10 @@ const storyState = {
   startTime: Date.now(),
   phase: 1,
   commandsTyped: [],
-  deadlineMinute: 15
+  deadlineMinute: 15,
+  logsSabotaged: false,
+  logsPendingCorruption: false,
+behindYouPending: false
 };
 
 function updatePhase() {

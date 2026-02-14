@@ -19,7 +19,7 @@ terminalInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     const command = terminalInput.value.trim();
 
-    // 🔴 STEP 7.2 — MEMORY: store every command
+    // Memory
     storyState.commandsTyped.push(command);
 
     printLine("> " + command);
@@ -32,11 +32,12 @@ function handleCommand(cmd) {
   switch (cmd) {
 
     case "help":
-      if (getPhase() <= 2) {
-        printLine("Available commands:");
-        printLine("help, whoami, clear, exit");
-      } else {
-        printLine("You already asked that.");
+      printLine("Available commands:");
+      printLine("help, whoami, clear, exit");
+
+      // Appear ONLY after logs sabotage
+      if (storyState.logsSabotaged && !storyState.logsPendingCorruption) {
+        printLine("rebootlogs");
       }
       break;
 
@@ -54,15 +55,31 @@ function handleCommand(cmd) {
       terminalOutput.innerHTML = "";
       break;
 
-  case "exit":
-  printLine("Requesting system logout...");
-  setTimeout(() => {
-    triggerAlarm();
-  }, 1000);
-  break;
+    case "exit":
+      printLine("Requesting system logout...");
+      setTimeout(() => {
+        triggerAlarm();
+      }, 1000);
+      break;
+
+    case "rebootlogs":
+      // One-time false hope
+      if (!storyState.logsSabotaged || storyState.logsPendingCorruption) {
+        printLine("Command not found.");
+        break;
+      }
+
+      printLine("Rebooting log service...");
+      setTimeout(() => {
+        printLine("Logs refreshed. Please check.");
+
+        // Arm betrayal (handled in desktop.js on log open)
+        storyState.logsPendingCorruption = true;
+        storyState.behindYouPending = true;
+      }, 1000);
+      break;
 
     case "":
-      // Do nothing on empty input
       break;
 
     default:

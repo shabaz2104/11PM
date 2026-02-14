@@ -31,6 +31,10 @@
         📁
         <span>Logs</span>
       </div>
+      <div class="icon" data-window="email">
+  📧
+  <span>Mail.exe</span>
+</div>
     </div>
 
     <!-- ================= WINDOWS ================= -->
@@ -100,10 +104,28 @@
         Logs
         <button class="close-btn">X</button>
       </div>
-      <div class="window-body">
-        System logs unavailable.
-      </div>
+     <div class="window-body" id="logs-body">
+  Initializing system logs...<br /><br />
+  [22:41] Backup routine completed.<br />
+  [22:47] User session started.<br />
+  [22:52] Report assigned.<br />
+  [22:52] Project Code: <b>PRJ-44721</b><br />
+  [22:53] Deadline set: 11:15 PM<br />
+</div>>
     </div>
+
+    <!-- Email Window -->
+<div class="window hidden" id="email-window">
+  <div class="window-header">
+    Mail.exe
+    <button class="close-btn">X</button>
+  </div>
+
+  <div class="window-body email-body">
+    <p><b>Inbox</b></p>
+    <p>No new messages.</p>
+  </div>
+</div>
 
     <!-- Taskbar -->
     <div id="taskbar">

@@ -23,10 +23,9 @@ body {
 
 #desktop {
   height: 100vh;
-  background: #bfbfbf;
+  background: #8e8e8e; /* darker, heavier grey */
   font-family: "MS Sans Serif", Arial, sans-serif;
   position: relative;
-  overflow: hidden;
 }
 
 #desktop-icons {
@@ -46,6 +45,8 @@ body {
   display: block;
   font-size: 12px;
   margin-top: 4px;
+  color: #ffffff;
+  text-shadow: 1px 1px 0 #000;
 }
 
 /* ===== Windows ===== */
@@ -233,4 +234,15 @@ body {
 }
 .window.hidden {
   display: none;
+}
+/* ===== Email App ===== */
+
+.email-body {
+  font-family: "MS Sans Serif", Arial, sans-serif;
+  font-size: 13px;
+  color: #000;
+}
+
+.email-body p {
+  margin: 6px 0;
 }

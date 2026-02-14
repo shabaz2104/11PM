@@ -37,6 +37,9 @@ function showSystemMessage(text) {
     msg.classList.add("system-hidden");
   }, 4000);
 }
+function triggerBehindYouMessage() {
+  showSystemMessage("I'm behind you.");
+}
 
 // Check phase and show messages
 setInterval(() => {
