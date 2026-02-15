@@ -31,9 +31,10 @@
         📁
         <span>Logs</span>
       </div>
-      <div class="icon" data-window="email">
+   <div class="icon" data-window="email" id="mail-icon">
   📧
   <span>Mail.exe</span>
+  <div class="mail-notification hidden" id="mail-dot"></div>
 </div>
     </div>
 
@@ -114,7 +115,8 @@
 </div>>
     </div>
 
-    <!-- Email Window -->
+    
+<!-- Email Window -->
 <div class="window hidden" id="email-window">
   <div class="window-header">
     Mail.exe
@@ -122,8 +124,18 @@
   </div>
 
   <div class="window-body email-body">
-    <p><b>Inbox</b></p>
-    <p>No new messages.</p>
+
+    <div class="email-sidebar">
+      <p><b>Inbox</b></p>
+      <div id="email-list"></div>
+    </div>
+
+    <div class="email-content">
+      <p class="email-placeholder">
+        Select a message to read.
+      </p>
+    </div>
+
   </div>
 </div>
 

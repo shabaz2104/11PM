@@ -246,3 +246,42 @@ body {
 .email-body p {
   margin: 6px 0;
 }
+/* ===== Email App Layout ===== */
+
+.email-body {
+  display: flex;
+  gap: 10px;
+  height: 200px;
+  box-sizing: border-box;
+}
+
+.email-sidebar {
+  width: 160px;
+  border-right: 1px solid #000;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+
+.email-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.email-item {
+  cursor: pointer;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+
+.email-item:hover {
+  background: #c0c0c0;
+}
+.mail-notification {
+  width: 8px;
+  height: 8px;
+  background: red;
+  border-radius: 50%;
+  position: absolute;
+  top: 4px;
+  right: 16px;
+}

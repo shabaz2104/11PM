@@ -1,3 +1,5 @@
+// ===== Boot System =====
+
 const bootTextEl = document.getElementById("boot-text");
 const bootScreen = document.getElementById("boot-screen");
 const desktop = document.getElementById("desktop");
@@ -37,11 +39,17 @@ function showSystemMessage(text) {
     msg.classList.add("system-hidden");
   }, 4000);
 }
+
 function triggerBehindYouMessage() {
-  showSystemMessage("I'm behind you.");
+  showSystemMessage("I'm behind you");
+
+  // Trigger malicious email shortly after
+  setTimeout(() => {
+    sendCreepyEmail();
+  }, 2000);
 }
 
-// Check phase and show messages
+// Phase-based system messages
 setInterval(() => {
   const phase = getPhase();
 
@@ -50,6 +58,8 @@ setInterval(() => {
     shownMessages.add(phase);
   }
 }, 1000);
+
+// ===== Boot Sequence =====
 
 let lineIndex = 0;
 
@@ -63,6 +73,9 @@ function showNextLine() {
     setTimeout(() => {
       bootScreen.classList.add("hidden");
       desktop.classList.remove("hidden");
+
+      // 🔔 Send first email immediately after boot
+      sendInitialEmail();
     }, 1000);
   }
 }
@@ -90,22 +103,20 @@ function triggerAlarm() {
 
   document.body.appendChild(overlay);
 
-  // Lock terminal input
   const input = document.getElementById("terminal-input");
   if (input) input.disabled = true;
 
-  // Remove alarm after delay (for now)
   setTimeout(() => {
     overlay.remove();
     if (input) input.disabled = false;
   }, 6000);
 }
+
 // ===== In-Game Clock =====
 
 const taskbarTime = document.getElementById("taskbar-time");
 const taskbarDay = document.getElementById("taskbar-day");
 
-// Game starts at 11:00 PM
 const GAME_START_HOUR = 23;
 const GAME_START_MINUTE = 0;
 
@@ -133,6 +144,84 @@ function updateGameClock() {
   if (taskbarTime) taskbarTime.textContent = timeString;
 }
 
-// Update every 10 seconds (smooth but cheap)
 setInterval(updateGameClock, 10000);
 updateGameClock();
+
+// ===== Email System =====
+
+const emailList = document.getElementById("email-list");
+const emailContent = document.querySelector(".email-content");
+const mailDot = document.getElementById("mail-dot");
+
+const emails = [];
+let firstEmailSent = false;
+
+function addEmail(subject, body) {
+  emails.push({ subject, body, read: false });
+  renderInbox();
+  showMailNotification();
+}
+
+function renderInbox() {
+  if (!emailList) return;
+  emailList.innerHTML = "";
+
+  emails.forEach((email, index) => {
+    const item = document.createElement("div");
+    item.className = "email-item";
+    item.innerHTML = `<b>${email.subject}</b>`;
+
+    item.addEventListener("click", () => {
+      openEmail(index);
+    });
+
+    emailList.appendChild(item);
+  });
+}
+
+function openEmail(index) {
+  const email = emails[index];
+  email.read = true;
+
+  emailContent.innerHTML = `
+    <p><b>From:</b> operations@company.internal</p>
+    <p><b>Subject:</b> ${email.subject}</p>
+    <hr />
+    <p>${email.body}</p>
+  `;
+
+  hideMailNotificationIfAllRead();
+}
+
+function showMailNotification() {
+  if (mailDot) mailDot.classList.remove("hidden");
+}
+
+function hideMailNotificationIfAllRead() {
+  const unread = emails.some(e => !e.read);
+  if (!unread && mailDot) {
+    mailDot.classList.add("hidden");
+  }
+}
+
+// ===== Email Triggers =====
+
+function sendInitialEmail() {
+  if (firstEmailSent) return;
+
+  addEmail(
+    "Pending Report Submission",
+    "This is a reminder that your quarterly report is still marked as incomplete.<br /><br />" +
+    "Please ensure submission before the end of your shift.<br /><br />" +
+    "Failure to comply may require escalation."
+  );
+
+  firstEmailSent = true;
+}
+
+function sendCreepyEmail() {
+  addEmail(
+    "RE:",
+    "Oh.<br /><br />Did I scare you?"
+  );
+}
