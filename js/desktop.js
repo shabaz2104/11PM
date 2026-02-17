@@ -25,6 +25,9 @@ icons.forEach(icon => {
     const windowEl = document.getElementById(`${target}-window`);
     if (!windowEl) return;
 
+    // 🔊 UI click sound
+    if (window.Sound) Sound.playClick();
+
     // ===== LOGS LOGIC =====
     if (target === "logs") {
       logsOpenedCount++;
@@ -33,7 +36,6 @@ icons.forEach(icon => {
       const typedLength = getTypedProjectCodeLength();
       const halfLength = Math.ceil(REQUIRED_PROJECT_CODE.length / 2);
 
-      // FIRST sabotage: memory insult
       if (
         logsOpenedCount >= 2 &&
         typedLength >= halfLength &&
@@ -47,7 +49,6 @@ icons.forEach(icon => {
         storyState.logsSabotaged = true;
       }
 
-      // POST-REBOOT betrayal (ONLY after rebootlogs)
       if (storyState.logsPendingCorruption) {
         logsBody.innerHTML =
           "<b>System Log</b><br /><br />" +
@@ -71,9 +72,24 @@ icons.forEach(icon => {
 
 closeButtons.forEach(btn => {
   btn.addEventListener("click", (e) => {
+    if (window.Sound) Sound.playClick();
     e.target.closest(".window").classList.add("hidden");
   });
 });
+
+// ===== Ending Logic =====
+
+function triggerEnding() {
+  setTimeout(() => {
+    const overlay = document.getElementById("ending-overlay");
+    if (overlay) overlay.classList.remove("hidden");
+
+    setTimeout(() => {
+      const credits = document.getElementById("credits");
+      if (credits) credits.classList.remove("hidden");
+    }, 4000);
+  }, 2000);
+}
 
 // ===== Work Report Submission Logic =====
 
@@ -82,6 +98,18 @@ const feedback = document.getElementById("report-feedback");
 
 if (submitBtn) {
   submitBtn.addEventListener("click", () => {
+
+    if (!storyState.horrorTriggered) {
+      feedback.textContent = "Submission delayed. Please wait...";
+      feedback.style.color = "red";
+
+      setTimeout(() => {
+        triggerBehindYouMessage();
+      }, 1500);
+
+      return;
+    }
+
     const projectCode = projectCodeInput.value.trim();
     const status = document.querySelector('input[name="status"]:checked');
     const confirmed = document.getElementById("confirm-checkbox").checked;
@@ -101,6 +129,8 @@ if (submitBtn) {
     feedback.textContent = "Report submitted successfully.";
     feedback.style.color = "green";
     window.reportSubmitted = true;
+
+    triggerEnding(); // ✅ clean, intentional ending
   });
 }
 

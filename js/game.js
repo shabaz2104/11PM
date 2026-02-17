@@ -41,7 +41,21 @@ function showSystemMessage(text) {
 }
 
 function triggerBehindYouMessage() {
+  // Prevent re-triggering
+  if (storyState.horrorTriggered) return;
+
+  // 🔊 Stop presence sound right before message
+  if (window.Sound) Sound.stopPresence();
+
+  // Mark horror as started
+  storyState.horrorTriggered = true;
+
   showSystemMessage("I'm behind you");
+
+  // 🔊 Restart presence sound after message (permanent)
+  setTimeout(() => {
+    if (window.Sound) Sound.startPresence();
+  }, 200);
 
   // Trigger malicious email shortly after
   setTimeout(() => {
@@ -73,6 +87,12 @@ function showNextLine() {
     setTimeout(() => {
       bootScreen.classList.add("hidden");
       desktop.classList.remove("hidden");
+
+      // 🔊 INIT + BOOT SOUND
+      if (window.Sound) {
+        Sound.init();
+        Sound.playBoot();
+      }
 
       // 🔔 Send first email immediately after boot
       sendInitialEmail();

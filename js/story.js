@@ -7,7 +7,8 @@ const storyState = {
   deadlineMinute: 15,
   logsSabotaged: false,
   logsPendingCorruption: false,
-behindYouPending: false
+behindYouPending: false,
+horrorTriggered: false,
 };
 
 function updatePhase() {
